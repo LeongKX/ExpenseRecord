@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.leong.expensesrecorder.MyApp
+import com.leong.expensesrecorder.data.enums.Months
 import com.leong.expensesrecorder.data.repo.ExpensesRepo
 import kotlinx.coroutines.launch
 
@@ -13,13 +14,13 @@ class HomeViewModel(
     repo: ExpensesRepo
 ): BaseHomeManageViewModel(repo){
     init {
-        getExpenses()
+        getMonths()
     }
 
-    override fun getExpenses() {
+    override fun getMonths() {
         viewModelScope.launch {
-            repo.getAllExpenses().collect { list ->
-                _expenses.value = list
+            Months.entries.forEach {
+                it.toString()
             }
         }
     }

@@ -4,9 +4,9 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.leong.expensesrecorder.data.models.Expense
-
+import com.leong.expensesrecorder.data.util.Converters
 @Database(entities = [Expense::class], version = 1)
-//@TypeConverters(Converters::class)
+@TypeConverters(Converters::class)
 abstract class MyDatabase: RoomDatabase() {
     abstract fun getExpensesDao(): ExpensesDao
 

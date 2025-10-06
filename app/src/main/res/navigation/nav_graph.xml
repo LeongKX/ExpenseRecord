@@ -14,8 +14,8 @@
             android:id="@+id/action_homeFragment_to_addExpenseFragment"
             app:destination="@id/addExpenseFragment" />
         <action
-            android:id="@+id/action_homeFragment_to_editExpenseFragment"
-            app:destination="@id/editExpenseFragment" />
+            android:id="@+id/action_homeFragment_to_expenseDetailFragment"
+            app:destination="@id/expenseDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/addExpenseFragment"
@@ -29,6 +29,21 @@
         tools:layout="@layout/manage_expense_layout">
         <argument
             android:name="expenseId"
+            app:argType="integer"/>
+    </fragment>
+    <fragment
+        android:id="@+id/expenseDetailFragment"
+        android:name="com.leong.expensesrecorder.ui.detail.ExpenseDetailFragment"
+        android:label="fragment_expense_detail"
+        tools:layout="@layout/fragment_expense_detail" >
+        <action
+            android:id="@+id/action_expenseDetailFragment_to_addExpenseFragment"
+            app:destination="@id/addExpenseFragment" />
+        <action
+            android:id="@+id/action_expenseDetailFragment_to_editExpenseFragment"
+            app:destination="@id/editExpenseFragment" />
+        <argument
+            android:name="month"
             app:argType="integer"/>
     </fragment>
 </navigation>

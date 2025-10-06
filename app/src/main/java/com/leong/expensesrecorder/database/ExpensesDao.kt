@@ -25,4 +25,8 @@ interface ExpensesDao {
     @Query("DELETE FROM expense WHERE id = :id")
     fun delete(id: Int)
 
+    @Query("SELECT * FROM expense WHERE month = :month")
+    suspend fun getExpensesByMonth(month: String): List<Expense>
+
+
 }

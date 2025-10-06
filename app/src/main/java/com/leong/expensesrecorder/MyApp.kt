@@ -15,7 +15,9 @@ class MyApp: Application() {
             this,
             MyDatabase::class.java,
             MyDatabase.NAME
-        ).build()
+        )
+//            .fallbackToDestructiveMigration(true)
+            .build()
         repo = ExpensesRepo(db.getExpensesDao())
     }
 }

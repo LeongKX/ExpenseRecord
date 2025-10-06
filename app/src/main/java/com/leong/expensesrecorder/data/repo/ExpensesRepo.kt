@@ -26,4 +26,9 @@ class ExpensesRepo(
     fun deleteExpense(id: Int) {
         dao.delete(id)
     }
+
+    suspend fun getExpensesByMonth(month: String): List<Expense> {
+        return dao.getExpensesByMonth(month)
+    }
+
 }

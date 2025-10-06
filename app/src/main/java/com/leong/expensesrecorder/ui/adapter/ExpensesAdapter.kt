@@ -8,7 +8,7 @@ import com.leong.expensesrecorder.databinding.LayoutExpenseItemBinding
 
 class ExpensesAdapter(
     private var expenses: List<Expense>,
-    private val onLongPress: (Expense) -> Unit
+//    private val onLongPress: (Expense) -> Unit
 ):RecyclerView.Adapter<ExpensesAdapter.ExpenseViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -23,13 +23,13 @@ class ExpensesAdapter(
         val expense = expenses[position]
 
         holder.binding.run {
-            tvCategory.text = expense.category.toString()
+            tvMonth.text = expense.category.toString()
             tvPrice.text = expense.price.toString()
 
-            cvExpense.setOnLongClickListener {
-                onLongPress(expense)
-                true
-            }
+//            cvExpense.setOnLongClickListener {
+//                onLongPress(expense)
+//                true
+//            }
         }
     }
 

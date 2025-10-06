@@ -16,11 +16,11 @@ abstract class BaseHomeManageViewModel(
 
     val expenses: StateFlow<List<Expense>> = _expenses
 
-    abstract fun getExpenses()
+    abstract fun getMonths()
 
-    fun deleteExpense(expenseId: Int) {
-        viewModelScope.launch(Dispatchers.IO) {
-            repo.deleteExpense(expenseId)
-        }
-    }
+//    fun deleteExpense(expenseId: Int) {
+//        viewModelScope.launch(Dispatchers.IO) {
+//            repo.deleteExpense(expenseId)
+//        }
+//    }
 }
