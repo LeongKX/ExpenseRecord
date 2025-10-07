@@ -44,6 +44,7 @@
             app:destination="@id/editExpenseFragment" />
         <argument
             android:name="month"
-            app:argType="integer"/>
+            app:argType="com.leong.expensesrecorder.data.enums.Months" />
+
     </fragment>
 </navigation>

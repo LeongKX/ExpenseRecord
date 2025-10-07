@@ -1,8 +1,10 @@
 package com.leong.expensesrecorder.data.repo
 
+import com.leong.expensesrecorder.data.enums.Months
 import com.leong.expensesrecorder.data.models.Expense
 import com.leong.expensesrecorder.database.ExpensesDao
-import kotlinx.coroutines.flow.Flow
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class ExpensesRepo(
     private val dao: ExpensesDao
@@ -11,9 +13,14 @@ class ExpensesRepo(
         dao.addExpense(expense)
     }
 
-    fun getAllExpenses(): Flow<List<Expense>> {
-        return dao.getAllExpenses()
+//    fun getAllExpenses(): Flow<List<Expense>> {
+//        return dao.getAllExpenses()
+//    }
+
+    suspend fun getAllExpensesOnce(): List<Expense> {
+        return dao.getAllExpensesOnce()
     }
+
 
     suspend fun getExpenseById(id: Int): Expense? {
         return dao.getExpenseById(id)
@@ -23,12 +30,20 @@ class ExpensesRepo(
         dao.update(expense)
     }
 
-    fun deleteExpense(id: Int) {
+    fun deleteExpense(id: Int?) {
         dao.delete(id)
     }
 
-    suspend fun getExpensesByMonth(month: String): List<Expense> {
-        return dao.getExpensesByMonth(month)
+    suspend fun getExpensesByMonth(month: Months): List<Expense> {
+        val allExpenses = dao.getAllExpensesOnce()
+
+        val formatter = SimpleDateFormat("MMMM", Locale.getDefault())
+
+        return allExpenses.filter { expense ->
+            val expenseMonth = formatter.format(expense.date).uppercase(Locale.getDefault())
+            expenseMonth == month.name
+        }
     }
+
 
 }

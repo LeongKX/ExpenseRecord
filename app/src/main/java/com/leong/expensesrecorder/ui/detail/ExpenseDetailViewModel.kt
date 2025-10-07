@@ -6,7 +6,10 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.leong.expensesrecorder.MyApp
+import com.leong.expensesrecorder.data.enums.Category
 import com.leong.expensesrecorder.data.enums.Months
+import com.leong.expensesrecorder.data.enums.SortBy
+import com.leong.expensesrecorder.data.enums.SortOrder
 import com.leong.expensesrecorder.data.models.Expense
 import com.leong.expensesrecorder.data.repo.ExpensesRepo
 import kotlinx.coroutines.Dispatchers
@@ -20,19 +23,73 @@ class ExpenseDetailViewModel(
     private val _finish = MutableSharedFlow<Unit>()
     val finish: SharedFlow<Unit> = _finish
 
-    private var expense: Expense? = null
+//    private var expense: Expense? = null
 
+    private var currentSort = SortBy.DATE
+    private var currentOrder = SortOrder.ASCENDING
+    private var currentSearch = ""
+    private var currentCategoryFilter: Category? = null
 
     suspend fun getExpensesByMonth(month: Months): List<Expense> {
-        return repo.getExpensesByMonth(month.name) // make sure your repo has this query
+        val allExpenses = repo.getExpensesByMonth(month)
+        return allExpenses
+            .filterCategory()
+            .filterSearch()
+            .applySort(currentSort, currentOrder)
     }
 
-    fun deleteExpense(expenseId: Int) {
+
+    fun deleteExpense(expenseId: Int?) {
         viewModelScope.launch(Dispatchers.IO) {
             repo.deleteExpense(expenseId)
+            _finish.emit(Unit)
         }
     }
 
+    fun setSearch(str: String) {
+        currentSearch = str
+        viewModelScope.launch { _finish.emit(Unit) }
+    }
+
+    fun setSorting(sortBy: SortBy, sortOrder: SortOrder) {
+        currentSort = sortBy
+        currentOrder = sortOrder
+        viewModelScope.launch { _finish.emit(Unit) }
+    }
+
+    fun setCategoryFilter(category: Category?) {
+        currentCategoryFilter = category
+        viewModelScope.launch { _finish.emit(Unit) }
+    }
+
+
+    private fun List<Expense>.applySort(sortBy: SortBy, sortOrder: SortOrder): List<Expense> {
+        return when (sortBy) {
+            SortBy.DATE -> when (sortOrder) {
+                SortOrder.ASCENDING -> sortedBy { it.date }
+                SortOrder.DESCENDING -> sortedByDescending { it.date }
+            }
+
+            SortBy.AMOUNT -> when (sortOrder) {
+                SortOrder.ASCENDING -> sortedBy { it.price }
+                SortOrder.DESCENDING -> sortedByDescending { it.price }
+            }
+        }
+    }
+
+    private fun List<Expense>.filterCategory(): List<Expense> {
+        return currentCategoryFilter?.let { selectedCategory ->
+            filter { it.category == selectedCategory }
+        } ?: this
+    }
+
+
+    private fun List<Expense>.filterSearch(): List<Expense> {
+        if (currentSearch.isBlank()) return this
+        return this.filter {
+            it.itemName.contains(currentSearch, ignoreCase = true)
+        }
+    }
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {

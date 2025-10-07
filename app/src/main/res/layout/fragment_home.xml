@@ -14,32 +14,32 @@
         android:orientation="vertical">
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:elevation="16dp"
-            android:paddingVertical="16dp"
-            android:paddingStart="16dp"
-            android:paddingEnd="8dp">
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="@color/white"-->
+<!--            android:elevation="16dp"-->
+<!--            android:paddingVertical="16dp"-->
+<!--            android:paddingStart="16dp"-->
+<!--            android:paddingEnd="8dp">-->
 
-            <EditText
-                android:id="@+id/etSearch"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/search_bar_bg"
-                android:drawableStart="@drawable/ic_search"
-                android:hint="Search" />
+<!--            <EditText-->
+<!--                android:id="@+id/etSearch"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:background="@drawable/search_bar_bg"-->
+<!--                android:drawableStart="@drawable/ic_search"-->
+<!--                android:hint="Search" />-->
 
-            <ImageView
-                android:id="@+id/ivSort"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginHorizontal="6dp"
-                android:src="@drawable/ic_filter" />
-        </LinearLayout>
+<!--            <ImageView-->
+<!--                android:id="@+id/ivSort"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center_vertical"-->
+<!--                android:layout_marginHorizontal="6dp"-->
+<!--                android:src="@drawable/ic_filter" />-->
+<!--        </LinearLayout>-->
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvExpenses"

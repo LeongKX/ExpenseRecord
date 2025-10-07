@@ -4,9 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.leong.expensesrecorder.data.enums.Months
-import com.leong.expensesrecorder.databinding.LayoutExpenseItemBinding
+import com.leong.expensesrecorder.databinding.LayoutMonthBinding
 
 class MonthsAdapter(
+    private var monthTotals: Map<Months, Double>,
     private val onPress: (Months) -> Unit
 ) : RecyclerView.Adapter<MonthsAdapter.MonthViewHolder>() {
     private val months = Months.entries.toList()
@@ -15,7 +16,7 @@ class MonthsAdapter(
         parent: ViewGroup,
         viewType: Int
     ): MonthViewHolder {
-        val binding = LayoutExpenseItemBinding.inflate(
+        val binding = LayoutMonthBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
@@ -23,30 +24,23 @@ class MonthsAdapter(
         return MonthViewHolder(binding)
     }
 
-    override fun onBindViewHolder(
-        holder: MonthViewHolder,
-        position: Int
-    ) {
+    override fun onBindViewHolder(holder: MonthViewHolder, position: Int) {
         val month = months[position]
-        holder.binding.run {
+        val total = monthTotals[month] ?: 0.0
+        holder.binding.apply {
             tvMonth.text = month.name
-
-            cvExpense.setOnClickListener {
-                onPress(month)
-//                true
-            }
+            tvPrice.text = String.format("RM%.2f", total)
+            cvExpense.setOnClickListener { onPress(month) }
         }
     }
 
     override fun getItemCount():Int = months.size
 
-
-    class MonthViewHolder(
-        val binding: LayoutExpenseItemBinding
-    ): RecyclerView.ViewHolder(binding.root){
-//        fun bind(month: Months) {
-//            binding.tvMonth.text = month.name
-//        }
+    fun updateTotals(newTotals: Map<Months, Double>) {
+        monthTotals = newTotals
+        notifyDataSetChanged()
     }
-
+    class MonthViewHolder(
+        val binding: LayoutMonthBinding
+    ): RecyclerView.ViewHolder(binding.root)
 }

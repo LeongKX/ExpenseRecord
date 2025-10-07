@@ -23,10 +23,13 @@ interface ExpensesDao {
     fun update(expense: Expense)
 
     @Query("DELETE FROM expense WHERE id = :id")
-    fun delete(id: Int)
+    fun delete(id: Int?)
 
-    @Query("SELECT * FROM expense WHERE month = :month")
-    suspend fun getExpensesByMonth(month: String): List<Expense>
+//    @Query("SELECT * FROM expense WHERE month = :month")
+//    suspend fun getExpensesByMonth(month: String): List<Expense>
+
+    @Query("SELECT * FROM expense")
+    suspend fun getAllExpensesOnce(): List<Expense>
 
 
 }

@@ -28,6 +28,33 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:elevation="16dp"
+        android:paddingVertical="16dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="8dp">
+
+        <EditText
+            android:id="@+id/etSearch"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/search_bar_bg"
+            android:drawableStart="@drawable/ic_search"
+            android:hint="Search" />
+
+        <ImageView
+            android:id="@+id/ivSort"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginHorizontal="6dp"
+            android:src="@drawable/ic_filter" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:paddingHorizontal="20dp">
 
@@ -38,9 +65,80 @@
             android:insetTop="20dp"
             android:insetBottom="20dp"
             android:paddingHorizontal="36dp"
+            android:clickable="true"
             android:text="add"
             app:backgroundTint="@color/green"
             app:cornerRadius="8dp" />
+    </LinearLayout>
+
+    <!-- TOTAL + CATEGORY SUMMARY SECTION -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="8dp">
+
+        <!-- First row: Total centered -->
+        <TextView
+            android:id="@+id/tvTotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total: RM0.00"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Second row: Entertainment & Shops -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="4dp">
+
+            <TextView
+                android:id="@+id/tvEntertainmentTotal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Entertainment: RM0.00" />
+
+            <TextView
+                android:id="@+id/tvShopsTotal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Shops: RM0.00" />
+        </LinearLayout>
+
+        <!-- Third row: Food and Drink & Others -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/tvFoodTotal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Food and Drink: RM0.00" />
+
+            <TextView
+                android:id="@+id/tvOthersTotal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Others: RM0.00" />
+        </LinearLayout>
+
     </LinearLayout>
 
     <ScrollView
@@ -53,81 +151,90 @@
         android:orientation="vertical"
         android:paddingHorizontal="20dp">
 
-        <!-- Row 1: Text columns -->
-        <LinearLayout
+<!--        &lt;!&ndash; Row 1: Text columns &ndash;&gt;-->
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal">-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/tvItemName"-->
+<!--                style="@style/TextAppearance.Material3.TitleMedium"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:layout_marginBottom="8dp"-->
+<!--                android:gravity="center"-->
+<!--                android:hint="item name" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/tvCategory"-->
+<!--                style="@style/TextAppearance.Material3.TitleMedium"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:layout_marginBottom="8dp"-->
+<!--                android:gravity="center"-->
+<!--                android:hint="category" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/tvQuantity"-->
+<!--                style="@style/TextAppearance.Material3.TitleMedium"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:layout_marginBottom="8dp"-->
+<!--                android:gravity="center"-->
+<!--                android:hint="quantity" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/tvPrice"-->
+<!--                style="@style/TextAppearance.Material3.TitleMedium"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:layout_marginBottom="8dp"-->
+<!--                android:gravity="center"-->
+<!--                android:hint="price" />-->
+<!--        </LinearLayout>-->
+
+<!--        &lt;!&ndash; Row 2: Buttons filling width &ndash;&gt;-->
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:layout_marginTop="8dp">-->
+
+<!--            <com.google.android.material.button.MaterialButton-->
+<!--                android:id="@+id/mbUpdate"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:layout_marginEnd="8dp"-->
+<!--                android:text="Update"-->
+<!--                app:backgroundTint="@color/teal"-->
+<!--                app:cornerRadius="8dp" />-->
+
+<!--            <com.google.android.material.button.MaterialButton-->
+<!--                android:id="@+id/mbDelete"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="50dp"-->
+<!--                android:layout_weight="1"-->
+<!--                android:layout_marginStart="8dp"-->
+<!--                android:text="Delete"-->
+<!--                app:backgroundTint="@color/red"-->
+<!--                app:cornerRadius="8dp" />-->
+
+<!--        </LinearLayout>-->
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvExpenses"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tvItemName"
-                style="@style/TextAppearance.Material3.TitleMedium"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginBottom="8dp"
-                android:gravity="center"
-                android:hint="item name" />
-
-            <TextView
-                android:id="@+id/tvCategory"
-                style="@style/TextAppearance.Material3.TitleMedium"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginBottom="8dp"
-                android:gravity="center"
-                android:hint="category" />
-
-            <TextView
-                android:id="@+id/tvQuantity"
-                style="@style/TextAppearance.Material3.TitleMedium"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginBottom="8dp"
-                android:gravity="center"
-                android:hint="quantity" />
-
-            <TextView
-                android:id="@+id/tvPrice"
-                style="@style/TextAppearance.Material3.TitleMedium"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginBottom="8dp"
-                android:gravity="center"
-                android:hint="price" />
-        </LinearLayout>
-
-        <!-- Row 2: Buttons filling width -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="8dp">
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/mbUpdate"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginEnd="8dp"
-                android:text="Update"
-                app:backgroundTint="@color/teal"
-                app:cornerRadius="8dp" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/mbDelete"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_weight="1"
-                android:layout_marginStart="8dp"
-                android:text="Delete"
-                app:backgroundTint="@color/red"
-                app:cornerRadius="8dp" />
-
-        </LinearLayout>
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:clipToPadding="false"
+            android:paddingTop="4dp"
+            android:paddingBottom="75dp" />
 
     </LinearLayout>
 

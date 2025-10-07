@@ -4,18 +4,24 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.leong.expensesrecorder.data.models.Expense
-import com.leong.expensesrecorder.databinding.LayoutExpenseItemBinding
+import com.leong.expensesrecorder.databinding.LayoutExpenseBinding
+
 
 class ExpensesAdapter(
     private var expenses: List<Expense>,
-//    private val onLongPress: (Expense) -> Unit
+    private val onPress: (Expense, ActionType) -> Unit
 ):RecyclerView.Adapter<ExpensesAdapter.ExpenseViewHolder>() {
+
+    enum class ActionType {
+        UPDATE,DELETE
+    }
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ):ExpenseViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = LayoutExpenseItemBinding.inflate(inflater,parent, false)
+        val binding = LayoutExpenseBinding.inflate(inflater,parent, false)
         return ExpenseViewHolder(binding)
     }
 
@@ -23,13 +29,20 @@ class ExpensesAdapter(
         val expense = expenses[position]
 
         holder.binding.run {
-            tvMonth.text = expense.category.toString()
+            tvItemName.text = expense.itemName
             tvPrice.text = expense.price.toString()
+            tvCategory.text = expense.category.toString()
+            tvQuantity.text = expense.quantity.toString()
+            tvDateTime.text = expense.date.toString()
 
-//            cvExpense.setOnLongClickListener {
-//                onLongPress(expense)
-//                true
-//            }
+            mbUpdate.setOnClickListener {
+                onPress(expense, ActionType.UPDATE)
+            }
+
+            mbDelete.setOnClickListener {
+                onPress(expense, ActionType.DELETE)
+            }
+
         }
     }
 
@@ -41,6 +54,6 @@ class ExpensesAdapter(
     }
 
     class ExpenseViewHolder(
-        val binding: LayoutExpenseItemBinding
+        val binding: LayoutExpenseBinding
     ): RecyclerView.ViewHolder(binding.root)
 }

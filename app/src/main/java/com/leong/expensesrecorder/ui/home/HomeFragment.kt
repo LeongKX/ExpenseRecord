@@ -14,17 +14,14 @@ class HomeFragment : BaseHomeManageFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupAdapter()
         binding.fabAdd.setOnClickListener {
             val action = HomeFragmentDirections.actionHomeFragmentToAddExpenseFragment()
             findNavController().navigate(action)
         }
-
-        binding.tvEmpty.text = "You have no new expenses"
     }
 
     override fun getExpenseDetailAction(months: Months): NavDirections {
-        return HomeFragmentDirections.actionHomeFragmentToExpenseDetailFragment(id)
+        return HomeFragmentDirections.actionHomeFragmentToExpenseDetailFragment(months)
     }
 
 }

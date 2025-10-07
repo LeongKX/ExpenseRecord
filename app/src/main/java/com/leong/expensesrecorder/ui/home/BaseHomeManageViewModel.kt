@@ -2,6 +2,7 @@ package com.leong.expensesrecorder.ui.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.leong.expensesrecorder.data.enums.Months
 import com.leong.expensesrecorder.data.models.Expense
 import com.leong.expensesrecorder.data.repo.ExpensesRepo
 import kotlinx.coroutines.Dispatchers
@@ -18,9 +19,13 @@ abstract class BaseHomeManageViewModel(
 
     abstract fun getMonths()
 
-//    fun deleteExpense(expenseId: Int) {
-//        viewModelScope.launch(Dispatchers.IO) {
-//            repo.deleteExpense(expenseId)
-//        }
-//    }
+    suspend fun getMonthlyTotals(): Map<Months, Double> {
+        val allExpenses = repo.getAllExpensesOnce()
+        return allExpenses
+            .groupBy { expense -> Months.fromDate(expense.date) }
+            .mapValues { (_, expenses) ->
+                expenses.sumOf { it.price }
+            }
+    }
+
 }

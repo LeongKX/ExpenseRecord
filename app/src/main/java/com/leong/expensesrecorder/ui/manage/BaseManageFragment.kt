@@ -12,7 +12,6 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.snackbar.Snackbar
 import com.leong.expensesrecorder.R
 import com.leong.expensesrecorder.data.enums.Category
-import com.leong.expensesrecorder.data.models.Expense
 import com.leong.expensesrecorder.databinding.ManageExpenseLayoutBinding
 import kotlinx.coroutines.launch
 
