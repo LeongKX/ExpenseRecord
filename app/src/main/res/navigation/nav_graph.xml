@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/monthlyChartFragment3">
 
     <fragment
         android:id="@+id/homeFragment"
@@ -47,4 +47,17 @@
             app:argType="com.leong.expensesrecorder.data.enums.Months" />
 
     </fragment>
+    <fragment
+        android:id="@+id/monthlyChartFragment3"
+        android:name="com.leong.expensesrecorder.ui.monthlyChart.MonthlyChartFragment"
+        android:label="MonthlyChartFragment"
+        tools:layout="@layout/fragment_monthly_chart">
+        <action
+            android:id="@+id/action_monthlyChartFragment3_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text=" companion object {&#xA;        val Factory: ViewModelProvider.Factory = viewModelFactory {&#xA;            initializer {&#xA;                val myRepository = (this[APPLICATION_KEY] as MyApp).repo&#xA;                EditExpenseViewModel(repo = myRepository)&#xA;            }&#xA;        }&#xA;    }" />-->
 </navigation>

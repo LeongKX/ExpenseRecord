@@ -4,54 +4,54 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:layout_marginHorizontal="20dp"
+    android:layout_marginHorizontal="@dimen/xxl"
     android:clickable="true"
     app:cardBackgroundColor="@color/white"
-    app:cardCornerRadius="20dp">
+    app:cardCornerRadius="@dimen/xxl">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="30dp">
+        android:padding="@dimen/xxxxl">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
-            android:text="are_you_sure"
-            android:textSize="26sp"
+            android:layout_marginBottom="@dimen/xxxxl"
+            android:text="@string/are_you_sure"
+            android:textSize="@dimen/tx_xxxxl"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvConfirm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="delete_confirm"
-            android:textSize="20sp" />
+            android:text="@string/delete_confirm"
+            android:textSize="@dimen/tx_xxl" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp">
+            android:layout_marginTop="@dimen/xxxxl">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/mbCancel"
-                android:layout_width="120dp"
-                android:layout_height="40dp"
-                android:layout_marginEnd="30dp"
+                android:layout_width="@dimen/confirmation_dialog_btn_width"
+                android:layout_height="@dimen/confirmation_dialog_btn_height"
+                android:layout_marginEnd="@dimen/xxxxl"
                 android:backgroundTint="@color/teal"
-                android:text="cancel"
-                app:cornerRadius="6dp" />
+                android:text="@string/cancel"
+                app:cornerRadius="@dimen/xxs" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/mbConfirm"
-                android:layout_width="120dp"
-                android:layout_height="40dp"
+                android:layout_width="@dimen/confirmation_dialog_btn_width"
+                android:layout_height="@dimen/confirmation_dialog_btn_height"
                 android:backgroundTint="@color/red"
-                android:text="delete"
-                app:cornerRadius="6dp" />
+                android:text="@string/delete"
+                app:cornerRadius="@dimen/xxs" />
 
         </LinearLayout>
     </LinearLayout>

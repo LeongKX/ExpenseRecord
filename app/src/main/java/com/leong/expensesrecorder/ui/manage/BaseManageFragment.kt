@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -41,13 +42,16 @@ abstract class BaseManageFragment : Fragment() {
         lifecycleScope.launch {
             viewModel.error.collect {
                 val message = when (it) {
-                    "NO_TITLE" -> "notitle"
-                    "NO_MEANING" -> "nomeaning"
-                    else -> "error"
+                    "NO_TITLE" -> "Please enter item name"
+                    "NO_QUANTITY" -> "Please enter quantity"
+                    "NO_PRICE" -> "Please enter price"
+                    "NO_CATEGORY" -> "Please select a category"
+                    else -> "Unknown error occurred"
                 }
-                showError(message)
+                Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
             }
         }
+
         //The back button on the toolbar. Navigates back
         binding.mtManage.setNavigationOnClickListener {
             findNavController().popBackStack()
@@ -69,7 +73,9 @@ abstract class BaseManageFragment : Fragment() {
 
     fun showError(msg: String) {
         val snackbar = Snackbar.make(binding.root, msg, Snackbar.LENGTH_LONG)
-        snackbar.setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.red)).show()
+        snackbar.setBackgroundTint(
+            ContextCompat.getColor(requireContext(), R.color.red)
+        ).show()
     }
 
 }

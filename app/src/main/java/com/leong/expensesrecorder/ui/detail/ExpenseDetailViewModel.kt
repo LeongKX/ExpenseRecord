@@ -22,9 +22,6 @@ class ExpenseDetailViewModel(
 ): ViewModel() {
     private val _finish = MutableSharedFlow<Unit>()
     val finish: SharedFlow<Unit> = _finish
-
-//    private var expense: Expense? = null
-
     private var currentSort = SortBy.DATE
     private var currentOrder = SortOrder.ASCENDING
     private var currentSearch = ""

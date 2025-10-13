@@ -25,6 +25,15 @@ import com.leong.expensesrecorder.data.util.Constant
 import com.leong.expensesrecorder.databinding.FragmentExpenseDetailBinding
 import com.leong.expensesrecorder.ui.adapter.ExpensesAdapter
 import kotlinx.coroutines.launch
+import com.leong.expensesrecorder.data.enums.Months
+
+
+import com.github.mikephil.charting.components.Legend
+import com.github.mikephil.charting.data.PieData
+import com.github.mikephil.charting.data.PieDataSet
+import com.github.mikephil.charting.data.PieEntry
+import com.github.mikephil.charting.utils.ColorTemplate
+
 
 class ExpenseDetailFragment : Fragment() {
 
@@ -37,6 +46,7 @@ class ExpenseDetailFragment : Fragment() {
     private val args: ExpenseDetailFragmentArgs by navArgs()
 
     private var expense: Expense? = null
+
 
     private lateinit var adapter: ExpensesAdapter
 
@@ -54,39 +64,54 @@ class ExpenseDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         setTextListener()
         setNavigation()
+        setupToolbar()
+        setupAddButton()
+        setupAdapter()
+        observeExpenses()
+    }
 
+    private fun setupToolbar() {
         binding.mtDetails.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
+    }
 
-        // Always set up Add button
-        binding.mbAdd.visibility = View.VISIBLE
-        binding.mbAdd.setOnClickListener {
-            val action =
-                ExpenseDetailFragmentDirections.actionExpenseDetailFragmentToAddExpenseFragment()
-            findNavController().navigate(action)
-        }
-
-        adapter = ExpensesAdapter(emptyList()) { expense, action ->
-            when (action) {
-                ExpensesAdapter.ActionType.UPDATE -> {
-                    val actionNav = ExpenseDetailFragmentDirections
-                        .actionExpenseDetailFragmentToEditExpenseFragment(expense.id!!)
-                    findNavController().navigate(actionNav)
-                }
-                ExpensesAdapter.ActionType.DELETE -> {
-                    val dialog = createDeleteDialog(expense.id)
-                    dialog.show()
+    private fun setupAddButton() {
+        val currentMonth = Months.entries[java.time.LocalDate.now().monthValue - 1]
+        if (args.month == currentMonth) {
+            binding.mbAdd.apply {
+                visibility = View.VISIBLE
+                setOnClickListener {
+                    val action = ExpenseDetailFragmentDirections
+                        .actionExpenseDetailFragmentToAddExpenseFragment()
+                    findNavController().navigate(action)
                 }
             }
+        } else {
+            binding.mbAdd.visibility = View.GONE
         }
+    }
 
+    private fun setupAdapter() {
+        adapter = ExpensesAdapter(emptyList()) { expense, action ->
+            when (action) {
+                ExpensesAdapter.ActionType.UPDATE -> navigateToEdit(expense.id!!)
+                ExpensesAdapter.ActionType.DELETE -> createDeleteDialog(expense.id).show()
+            }
+        }
+    }
+
+    private fun navigateToEdit(expenseId: Int) {
+        val action = ExpenseDetailFragmentDirections
+            .actionExpenseDetailFragmentToEditExpenseFragment(expenseId)
+        findNavController().navigate(action)
+    }
+
+    private fun observeExpenses() {
         lifecycleScope.launch {
             val expenses = viewModel.getExpensesByMonth(args.month)
-
             if (expenses.isNotEmpty()) {
                 adapter.setExpenses(expenses)
                 setupRecyclerView()
@@ -95,25 +120,29 @@ class ExpenseDetailFragment : Fragment() {
                 showNoData()
             }
 
-
             viewModel.finish.collect {
                 getExpense()
             }
         }
-
     }
+
+
 
     private fun showNoData() {
         binding.run {
             mtDetails.setNavigationOnClickListener { findNavController().popBackStack() }
-
             setupRecyclerView()
 
-            mbAdd.visibility = View.VISIBLE
-            mbAdd.setOnClickListener {
-//                Log.d("ExpenseDetail", "Add clicked")
-                val action = ExpenseDetailFragmentDirections.actionExpenseDetailFragmentToAddExpenseFragment()
-                findNavController().navigate(action)
+            val currentMonth = Months.entries[java.time.LocalDate.now().monthValue - 1]
+            if (args.month == currentMonth) {
+                mbAdd.visibility = View.VISIBLE
+                mbAdd.setOnClickListener {
+                    val action = ExpenseDetailFragmentDirections
+                        .actionExpenseDetailFragmentToAddExpenseFragment()
+                    findNavController().navigate(action)
+                }
+            } else {
+                mbAdd.visibility = View.GONE
             }
         }
     }
@@ -160,7 +189,6 @@ class ExpenseDetailFragment : Fragment() {
         var shopsTotal = 0.0
         var foodTotal = 0.0
         var othersTotal = 0.0
-
         for (expense in expenses) {
             when (expense.category) {
                 Category.ENTERTAINMENT -> entertainmentTotal += expense.price
@@ -169,16 +197,66 @@ class ExpenseDetailFragment : Fragment() {
                 Category.OTHERS -> othersTotal += expense.price
             }
         }
-
         val grandTotal = entertainmentTotal + shopsTotal + foodTotal + othersTotal
-
         // Update UI
         binding.tvTotal.text = String.format("Total: RM%.2f", grandTotal)
         binding.tvEntertainmentTotal.text = String.format("Entertainment: RM%.2f", entertainmentTotal)
         binding.tvShopsTotal.text = String.format("Shops: RM%.2f", shopsTotal)
         binding.tvFoodTotal.text = String.format("Food and Drink: RM%.2f", foodTotal)
         binding.tvOthersTotal.text = String.format("Others: RM%.2f", othersTotal)
+
+        // After updating text totals
+        setupPieChart(entertainmentTotal, shopsTotal, foodTotal, othersTotal)
     }
+
+    private fun setupPieChart(entertainment: Double, shops: Double, food: Double, others: Double) {
+        val entries = createPieEntries(entertainment, shops, food, others)
+        val dataSet = PieDataSet(entries, "").apply {
+            colors = ColorTemplate.MATERIAL_COLORS.toList()
+            sliceSpace = 3f
+            selectionShift = 5f
+        }
+
+        val data = PieData(dataSet).apply {
+            setValueTextSize(12f)
+            setValueTextColor(Color.WHITE)
+        }
+
+        configurePieChart(data)
+    }
+
+    private fun createPieEntries(entertainment: Double, shops: Double, food: Double, others: Double): ArrayList<PieEntry> {
+        val entries = ArrayList<PieEntry>()
+        if (entertainment > 0) entries.add(PieEntry(entertainment.toFloat(), "Entertainment"))
+        if (shops > 0) entries.add(PieEntry(shops.toFloat(), "Shops"))
+        if (food > 0) entries.add(PieEntry(food.toFloat(), "Food & Drink"))
+        if (others > 0) entries.add(PieEntry(others.toFloat(), "Others"))
+        return entries
+    }
+
+    private fun configurePieChart(data: PieData) {
+        binding.pieChart.apply {
+            this.data = data
+            description.isEnabled = false
+            setUsePercentValues(true)
+            isDrawHoleEnabled = true
+            setHoleColor(Color.TRANSPARENT)
+            setEntryLabelColor(Color.BLACK)
+            centerText = "Expenses"
+            setCenterTextSize(14f)
+
+            legend.orientation = Legend.LegendOrientation.HORIZONTAL
+            legend.isWordWrapEnabled = true
+            legend.horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
+            legend.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
+
+            animateY(1000)
+            invalidate()
+        }
+    }
+
+
+
 
 
     fun createDeleteDialog(expenseId: Int?): Dialog {

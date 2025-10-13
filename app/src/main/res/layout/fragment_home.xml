@@ -13,33 +13,16 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/mtManage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            app:navigationIcon="@drawable/ic_arrow_back"
+            app:title="@string/month"
+            app:titleCentered="true">
 
-<!--        <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:background="@color/white"-->
-<!--            android:elevation="16dp"-->
-<!--            android:paddingVertical="16dp"-->
-<!--            android:paddingStart="16dp"-->
-<!--            android:paddingEnd="8dp">-->
-
-<!--            <EditText-->
-<!--                android:id="@+id/etSearch"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_weight="1"-->
-<!--                android:background="@drawable/search_bar_bg"-->
-<!--                android:drawableStart="@drawable/ic_search"-->
-<!--                android:hint="Search" />-->
-
-<!--            <ImageView-->
-<!--                android:id="@+id/ivSort"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_gravity="center_vertical"-->
-<!--                android:layout_marginHorizontal="6dp"-->
-<!--                android:src="@drawable/ic_filter" />-->
-<!--        </LinearLayout>-->
+        </com.google.android.material.appbar.MaterialToolbar>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvExpenses"
@@ -80,7 +63,7 @@
         android:layout_gravity="bottom|end"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:text="Add Record"
+        android:text="@string/add_record"
         app:icon="@drawable/ic_add" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

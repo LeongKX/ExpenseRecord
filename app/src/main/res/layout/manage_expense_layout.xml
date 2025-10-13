@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         app:navigationIcon="@drawable/ic_arrow_back"
-        app:title="Add New Expense"
+        app:title="@string/add_new_expense"
         app:titleCentered="true">
 
     </com.google.android.material.appbar.MaterialToolbar>
@@ -22,22 +22,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="8dp">
+        android:padding="@dimen/xs">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Item Name" />
+            android:layout_marginTop="@dimen/xl"
+            android:text="@string/item_name" />
 
         <EditText
             android:id="@+id/etItemName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/xl"
             android:background="@drawable/edit_text_bg"
             android:gravity="start|top"
-            android:hint="Item Name"
+            android:hint="@string/item_name"
             android:maxLines="1"
             android:minLines="1"
             android:overScrollMode="always"
@@ -47,22 +47,14 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Category" />
-
-<!--        <com.google.android.material.chip.ChipGroup-->
-<!--            android:id="@+id/cgCategory"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="16dp"-->
-<!--            android:background="@drawable/edit_text_bg"-->
-<!--            app:singleSelection="true" />-->
+            android:layout_marginTop="@dimen/xl"
+            android:text="@string/category" />
 
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/cgCategory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/xl"
             android:background="@drawable/edit_text_bg"
             app:singleSelection="true">
 
@@ -71,45 +63,45 @@
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Entertainment" />
+                android:text="@string/entertainment" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipShops"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Shops" />
+                android:text="@string/shops" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipFoodAndDrink"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Food_And_Drink" />
+                android:text="@string/fnd" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipOthers"
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Others" />
+                android:text="@string/others" />
 
         </com.google.android.material.chip.ChipGroup>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Quantity" />
+            android:layout_marginTop="@dimen/xl"
+            android:text="@string/quantity" />
 
         <EditText
             android:id="@+id/etQuantity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/xl"
             android:background="@drawable/edit_text_bg"
             android:gravity="start|top"
-            android:hint="Quantity"
+            android:hint="@string/quantity"
             android:maxLines="1"
             android:minLines="1"
             android:overScrollMode="always"
@@ -119,17 +111,17 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Price" />
+            android:layout_marginTop="@dimen/xl"
+            android:text="@string/price" />
 
         <EditText
             android:id="@+id/etPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/xl"
             android:background="@drawable/edit_text_bg"
             android:gravity="start|top"
-            android:hint="Price"
+            android:hint="@string/price"
             android:maxLines="1"
             android:minLines="1"
             android:overScrollMode="always"
@@ -138,19 +130,19 @@
     </LinearLayout>
 
     <Space
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="@dimen/none"
+        android:layout_height="@dimen/none"
         android:layout_weight="1" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/mbSubmit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="36dp"/>
+        android:layout_marginHorizontal="@dimen/xxxxxl"/>
 
     <Space
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="@dimen/none"
+        android:layout_height="@dimen/none"
         android:layout_weight="1" />
 
 </LinearLayout>

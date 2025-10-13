@@ -6,6 +6,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.chip.Chip
+import com.leong.expensesrecorder.R
 import com.leong.expensesrecorder.data.enums.Category
 import com.leong.expensesrecorder.data.models.Expense
 import kotlinx.coroutines.launch
@@ -23,14 +24,12 @@ class EditExpenseFragment : BaseManageFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding.apply {
             chipEntertainment.tag = Category.ENTERTAINMENT
             chipShops.tag = Category.SHOPS
             chipFoodAndDrink.tag = Category.FOOD_AND_DRINK
             chipOthers.tag = Category.OTHERS
         }
-
         val expenseId = args.expenseId
         lifecycleScope.launch {
             expense = viewModel.getExpense(expenseId)
@@ -54,8 +53,8 @@ class EditExpenseFragment : BaseManageFragment() {
 
     fun setExpense(expense: Expense?) {
         binding.run {
-            mbSubmit.text = "Update"
-            mtManage.title = "Update Word"
+            mbSubmit.text = getString(R.string.update)
+            mtManage.title = getString(R.string.update_record)
             etItemName.setText(expense?.itemName)
             // Category Chip
             for (i in 0 until binding.cgCategory.childCount) {

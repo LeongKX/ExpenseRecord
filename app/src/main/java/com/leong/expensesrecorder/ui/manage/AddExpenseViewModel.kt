@@ -13,21 +13,28 @@ import kotlinx.coroutines.launch
 
 class AddExpenseViewModel(
     repo: ExpensesRepo
-): BaseManageViewModel(repo) {
+) : BaseManageViewModel(repo) {
 
     override fun add(expense: Expense) {
-        try {
-            viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                // ✅ Validate inside the same coroutine scope
                 require(expense.itemName.isNotBlank()) { "NO_TITLE" }
-                require(expense.price.toString().isNotBlank()) { "NO_PRICE" }
+                require(expense.quantity > 0) { "NO_QUANTITY" }
+                require(expense.price > 0) { "NO_PRICE" }
+                require(expense.category != null) { "NO_CATEGORY" }
+
                 repo.addExpense(expense)
                 _finish.emit(Unit)
+            } catch (e: IllegalArgumentException) {
+                // validation error
+                _error.emit(e.message ?: "UNKNOWN_ERROR")
+            } catch (e: Exception) {
+                // unexpected error
+                _error.emit("Something went wrong")
             }
-        } catch (e: Exception) {
-            viewModelScope.launch { _error.emit(e.message.toString()) }
         }
     }
-
 
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {

@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "905425e0106846852df9045c4338b023",
+    "identityHash": "9820881826749ce174e43243920daa05",
     "entities": [
       {
         "tableName": "Expense",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`itemName` TEXT NOT NULL, `category` TEXT NOT NULL, `quantity` INTEGER NOT NULL, `price` REAL NOT NULL, `id` INTEGER, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`itemName` TEXT NOT NULL, `category` TEXT NOT NULL, `quantity` INTEGER NOT NULL, `price` REAL NOT NULL, `id` INTEGER, `date` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "itemName",
@@ -36,6 +36,12 @@
             "fieldPath": "id",
             "columnName": "id",
             "affinity": "INTEGER"
+          },
+          {
+            "fieldPath": "date",
+            "columnName": "date",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -48,7 +54,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '905425e0106846852df9045c4338b023')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9820881826749ce174e43243920daa05')"
     ]
   }
 }

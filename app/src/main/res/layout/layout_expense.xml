@@ -4,16 +4,16 @@
     android:id="@+id/cvWord"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="16dp"
+    android:layout_margin="@dimen/xl"
     android:clickable="true"
-    android:elevation="8dp"
-    app:cardCornerRadius="8dp">
+    android:elevation="@dimen/xs"
+    app:cardCornerRadius="@dimen/xs">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="8dp">
+        android:padding="@dimen/xs">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -30,7 +30,7 @@
 
             <View
                 android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_height="@dimen/none"
                 android:layout_weight="1"/>
 
             <TextView
@@ -38,7 +38,7 @@
                 style="@style/TextAppearance.Material3.TitleLarge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="6dp"
+                android:layout_marginVertical="@dimen/xxs"
                 android:ellipsize="end"
                 android:hint="price"
                 android:maxLines="1"
@@ -51,7 +51,7 @@
             android:id="@+id/tvCategory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="6dp"
+            android:layout_marginVertical="@dimen/xxs"
             android:ellipsize="end"
             android:hint="category"
             android:maxLines="1"
@@ -65,22 +65,22 @@
                 android:id="@+id/tvQuantity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="6dp"
+                android:layout_marginVertical="@dimen/xxs"
                 android:ellipsize="end"
                 android:hint="quantity"
                 android:maxLines="1"
                 android:minLines="1" />
 
             <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_width="@dimen/none"
+                android:layout_height="@dimen/none"
                 android:layout_weight="1"/>
 
             <TextView
                 android:id="@+id/tvDateTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="6dp"
+                android:layout_marginVertical="@dimen/xxs"
                 android:ellipsize="end"
                 android:hint="date time"
                 android:maxLines="1"
@@ -92,27 +92,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="8dp">
+            android:layout_marginTop="@dimen/xs">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/mbUpdate"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/none"
+                android:layout_height="@dimen/layout_expense_btn_height"
                 android:layout_weight="1"
-                android:layout_marginEnd="8dp"
-                android:text="Update"
+                android:layout_marginEnd="@dimen/xs"
+                android:text="@string/update"
                 app:backgroundTint="@color/teal"
-                app:cornerRadius="8dp" />
+                app:cornerRadius="@dimen/xs" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/mbDelete"
-                android:layout_width="0dp"
-                android:layout_height="50dp"
+                android:layout_width="@dimen/none"
+                android:layout_height="@dimen/layout_expense_btn_height"
                 android:layout_weight="1"
-                android:layout_marginStart="8dp"
-                android:text="Delete"
+                android:layout_marginStart="@dimen/xs"
+                android:text="@string/delete"
                 app:backgroundTint="@color/red"
-                app:cornerRadius="8dp" />
+                app:cornerRadius="@dimen/xs" />
 
         </LinearLayout>
 

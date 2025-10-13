@@ -27,6 +27,7 @@ class EditExpenseViewModel(
             viewModelScope.launch(Dispatchers.IO) {
                 require(newExpense.itemName.isNotBlank()) {"No Item Name"}
                 require(newExpense.price.toString().isNotBlank()) {"No Price"}
+                require(newExpense.quantity.toString().isNotBlank()) {"No Quantity"}
                 expense?.let {
                     repo.editExpense(
                         it.copy(newExpense.itemName,newExpense.category,newExpense.quantity,newExpense.price)

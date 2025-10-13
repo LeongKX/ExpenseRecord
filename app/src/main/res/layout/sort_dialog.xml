@@ -4,23 +4,23 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:layout_marginHorizontal="20dp"
+    android:layout_marginHorizontal="@dimen/xxl"
     android:clickable="true"
     app:cardBackgroundColor="@color/white"
-    app:cardCornerRadius="20dp">
+    app:cardCornerRadius="@dimen/xxl">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="30dp">
+        android:padding="@dimen/xxxxl">
 
         <TextView
             style="@style/TextAppearance.Material3.TitleLarge"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="8dp"
-            android:text="Sort Order"
+            android:paddingBottom="@dimen/xs"
+            android:text="@string/sort_order"
             android:textStyle="bold" />
 
         <RadioGroup
@@ -35,7 +35,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Ascending" />
+                android:text="@string/ascending" />
 
 
             <RadioButton
@@ -43,9 +43,9 @@
                 style="@style/TextAppearance.Material3.BodyLarge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="@dimen/xs"
                 android:layout_weight="1"
-                android:text="Descending" />
+                android:text="@string/descending" />
 
         </RadioGroup>
 
@@ -53,9 +53,9 @@
             style="@style/TextAppearance.Material3.TitleLarge"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="16dp"
-            android:paddingBottom="8dp"
-            android:text="Sort By"
+            android:paddingTop="@dimen/xl"
+            android:paddingBottom="@dimen/xs"
+            android:text="@string/sort_by"
             android:textStyle="bold" />
 
         <RadioGroup
@@ -70,7 +70,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Date" />
+                android:text="@string/date" />
 
             <RadioButton
                 android:id="@+id/rbAmount"
@@ -78,7 +78,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Amount" />
+                android:text="@string/amount" />
 
         </RadioGroup>
 
@@ -86,9 +86,9 @@
             style="@style/TextAppearance.Material3.TitleLarge"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="16dp"
-            android:paddingBottom="8dp"
-            android:text="Category"
+            android:paddingTop="@dimen/xl"
+            android:paddingBottom="@dimen/xs"
+            android:text="@string/category"
             android:textStyle="bold" />
 
         <RadioButton
@@ -96,7 +96,7 @@
             style="@style/TextAppearance.Material3.BodyLarge"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="All Categories" />
+            android:text="@string/all_categories" />
 
         <RadioGroup
             android:id="@+id/rgCategory"
@@ -110,7 +110,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Entertainment" />
+                android:text="@string/entertainment" />
 
 
             <RadioButton
@@ -119,7 +119,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Shops" />
+                android:text="@string/shops" />
 
             <RadioButton
                 android:id="@+id/rbFnD"
@@ -127,7 +127,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Food and Drink" />
+                android:text="@string/fnd" />
 
             <RadioButton
                 android:id="@+id/rbOthers"
@@ -135,23 +135,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Others" />
+                android:text="@string/others" />
 
         </RadioGroup>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/xl"
             android:gravity="center">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/mbDone"
-                android:layout_width="120dp"
-                android:layout_height="40dp"
+                android:layout_width="@dimen/confirmation_dialog_btn_width"
+                android:layout_height="@dimen/confirmation_dialog_btn_height"
                 android:backgroundTint="@color/teal"
-                android:text="Done"
-                app:cornerRadius="6dp" />
+                android:text="@string/done"
+                app:cornerRadius="@dimen/xxs" />
 
         </LinearLayout>
     </LinearLayout>

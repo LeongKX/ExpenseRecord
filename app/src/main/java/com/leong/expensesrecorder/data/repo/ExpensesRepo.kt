@@ -13,10 +13,6 @@ class ExpensesRepo(
         dao.addExpense(expense)
     }
 
-//    fun getAllExpenses(): Flow<List<Expense>> {
-//        return dao.getAllExpenses()
-//    }
-
     suspend fun getAllExpensesOnce(): List<Expense> {
         return dao.getAllExpensesOnce()
     }

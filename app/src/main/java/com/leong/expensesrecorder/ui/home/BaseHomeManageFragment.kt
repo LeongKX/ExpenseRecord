@@ -33,7 +33,10 @@ abstract class BaseHomeManageFragment : Fragment() {
             val totals = viewModel.getMonthlyTotals()
             setupAdapter(totals)
         }
-//        loadTotals()
+
+        binding.mtManage.setNavigationOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 
     fun setupAdapter(totals: Map<Months, Double>) {
@@ -47,13 +50,6 @@ abstract class BaseHomeManageFragment : Fragment() {
         binding.rvExpenses.adapter = adapter
         binding.rvExpenses.layoutManager = LinearLayoutManager(this.context)
         }
-
-//    private fun loadTotals() {
-//        lifecycleScope.launch {
-//            val totals = viewModel.getMonthlyTotals()
-//            adapter.updateTotals(totals)
-//        }
-//    }
 
     protected fun navigateToDetails(months: Months) {
         val action = getExpenseDetailAction(months)
