@@ -42,4 +42,20 @@
     <string name="fnd">Food and Drink</string>
     <string name="others">Others</string>
 
+    <!-- Home / year navigation -->
+    <string name="expenses">Expenses</string>
+    <string name="year">Year</string>
+    <string name="spent_in_year">Spent in %1$s</string>
+    <string name="no_expenses_year">No expenses recorded for %1$s</string>
+    <string name="no_records">No records yet</string>
+    <string name="apply">Apply</string>
+    <string name="reset">Reset</string>
+    <string name="filter_and_sort">Filter &amp; Sort</string>
+    <string name="qty_format">Qty: %1$d</string>
+    <string name="price_format">RM%1$.2f</string>
+    <string name="content_add">Add record</string>
+    <string name="content_filter">Filter and sort</string>
+    <string name="date_hint">Date</string>
+    <string name="select_date">Select date</string>
+
 </resources>

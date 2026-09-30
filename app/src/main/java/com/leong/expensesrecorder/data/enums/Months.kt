@@ -23,6 +23,10 @@ enum class Months(val monthIndex: Int) {
     MAY(4), JUNE(5), JULY(6), AUGUST(7),
     SEPTEMBER(8), OCTOBER(9), NOVEMBER(10), DECEMBER(11);
 
+    /** Title-cased name for display, e.g. "January". */
+    val displayName: String
+        get() = name.lowercase().replaceFirstChar { it.uppercase() }
+
     companion object {
         fun fromDate(date: Date): Months {
             val calendar = Calendar.getInstance()

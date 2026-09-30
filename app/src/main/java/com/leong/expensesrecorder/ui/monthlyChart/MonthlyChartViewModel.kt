@@ -8,8 +8,8 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.leong.expensesrecorder.MyApp
 import com.leong.expensesrecorder.data.enums.Category
-import com.leong.expensesrecorder.data.enums.Months
 import com.leong.expensesrecorder.data.models.Expense
+import com.leong.expensesrecorder.data.models.MonthYear
 import com.leong.expensesrecorder.data.repo.ExpensesRepo
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -33,9 +33,9 @@ class MonthlyChartViewModel(
     private val _totals = MutableStateFlow(CategoryTotals())
     val totals: StateFlow<CategoryTotals> = _totals
 
-    fun loadMonthData(month: Months) {
+    fun loadMonthData(monthYear: MonthYear) {
         viewModelScope.launch {
-            val expensesList = repo.getExpensesByMonth(month)
+            val expensesList = repo.getExpensesByMonthYear(monthYear)
             _expenses.value = expensesList
             _totals.value = calculateTotals(expensesList)
         }

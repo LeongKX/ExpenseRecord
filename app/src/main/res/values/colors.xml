@@ -2,11 +2,67 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="teal">#05B1FD</color>
-    <color name="red">#C90B17</color>
+
+    <!-- Legacy names kept for existing references -->
+    <color name="teal">#006A64</color>
+    <color name="red">#BA1A1A</color>
     <color name="gray">#E9ECF5</color>
     <color name="beige">#F9F4F4</color>
     <color name="light_gray">#A4A4A4</color>
-    <color name="green">#FF00FF00</color>
-    <color name="hint_gray">#ABA6AD</color>
+    <color name="green">#3A6A3C</color>
+    <color name="hint_gray">#8E9199</color>
+
+    <!-- ===== Material 3 brand scheme (light) ===== -->
+    <color name="md_primary">#006A64</color>
+    <color name="md_on_primary">#FFFFFF</color>
+    <color name="md_primary_container">#9EF2E9</color>
+    <color name="md_on_primary_container">#00201E</color>
+    <color name="md_secondary">#4A6360</color>
+    <color name="md_on_secondary">#FFFFFF</color>
+    <color name="md_secondary_container">#CCE8E4</color>
+    <color name="md_on_secondary_container">#051F1D</color>
+    <color name="md_tertiary">#456179</color>
+    <color name="md_on_tertiary">#FFFFFF</color>
+    <color name="md_error">#BA1A1A</color>
+    <color name="md_on_error">#FFFFFF</color>
+    <color name="md_background">#F4FBF8</color>
+    <color name="md_on_background">#161D1C</color>
+    <color name="md_surface">#F4FBF8</color>
+    <color name="md_on_surface">#161D1C</color>
+    <color name="md_surface_variant">#DAE5E1</color>
+    <color name="md_on_surface_variant">#3F4947</color>
+    <color name="md_surface_container">#E8EFEB</color>
+    <color name="md_surface_container_high">#E2E9E6</color>
+    <color name="md_outline">#6F7977</color>
+    <color name="md_outline_variant">#BEC9C5</color>
+
+    <!-- ===== Material 3 brand scheme (dark) ===== -->
+    <color name="md_primary_dark">#82D5CD</color>
+    <color name="md_on_primary_dark">#003733</color>
+    <color name="md_primary_container_dark">#00504B</color>
+    <color name="md_on_primary_container_dark">#9EF2E9</color>
+    <color name="md_secondary_dark">#B1CCC8</color>
+    <color name="md_on_secondary_dark">#1C3532</color>
+    <color name="md_secondary_container_dark">#324B48</color>
+    <color name="md_on_secondary_container_dark">#CCE8E4</color>
+    <color name="md_tertiary_dark">#ACC9E5</color>
+    <color name="md_on_tertiary_dark">#143349</color>
+    <color name="md_error_dark">#FFB4AB</color>
+    <color name="md_on_error_dark">#690005</color>
+    <color name="md_background_dark">#0E1513</color>
+    <color name="md_on_background_dark">#DDE4E1</color>
+    <color name="md_surface_dark">#0E1513</color>
+    <color name="md_on_surface_dark">#DDE4E1</color>
+    <color name="md_surface_variant_dark">#3F4947</color>
+    <color name="md_on_surface_variant_dark">#BEC9C5</color>
+    <color name="md_surface_container_dark">#1A211F</color>
+    <color name="md_surface_container_high_dark">#242B29</color>
+    <color name="md_outline_dark">#899390</color>
+    <color name="md_outline_variant_dark">#3F4947</color>
+
+    <!-- ===== Category colors (used by chips + pie chart, stable in both themes) ===== -->
+    <color name="cat_entertainment">#7E57C2</color>
+    <color name="cat_shops">#26A69A</color>
+    <color name="cat_food">#FB8C00</color>
+    <color name="cat_others">#78909C</color>
 </resources>

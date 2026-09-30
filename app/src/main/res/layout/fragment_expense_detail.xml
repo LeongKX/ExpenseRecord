@@ -1,186 +1,203 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clickable="true"
-    android:orientation="vertical"
-    android:paddingTop="@dimen/xxl"
+    android:background="?attr/colorSurface"
     tools:context=".ui.detail.ExpenseDetailFragment">
 
-    <com.google.android.material.divider.MaterialDivider
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/xxxxs" />
+        android:layout_height="wrap_content"
+        android:background="?attr/colorSurface"
+        app:elevation="0dp">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/mtDetails"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        app:navigationIcon="@drawable/ic_arrow_back"
-        app:title="expense_detail"
-        app:titleCentered="true" />
-
-    <com.google.android.material.divider.MaterialDivider
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/xxxxs" />
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/mtDetails"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="@drawable/ic_arrow_back"
+            app:titleCentered="true"
+            tools:title="January 2026" />
+    </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:elevation="@dimen/xl"
-        android:paddingVertical="@dimen/xl"
-        android:paddingStart="@dimen/xl"
-        android:paddingEnd="@dimen/xs">
-
-        <EditText
-            android:id="@+id/etSearch"
-            android:layout_width="@dimen/none"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/search_bar_bg"
-            android:drawableStart="@drawable/ic_search"
-            android:hint="@string/search" />
-
-        <ImageView
-            android:id="@+id/ivSort"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginHorizontal="@dimen/xxs"
-            android:src="@drawable/ic_filter" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:paddingHorizontal="@dimen/xxl">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+        <!-- Search + filter row -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingHorizontal="@dimen/xxl">
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="16dp"
+            android:paddingBottom="8dp">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilSearch"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="@string/search"
+                app:boxCornerRadiusBottomEnd="28dp"
+                app:boxCornerRadiusBottomStart="28dp"
+                app:boxCornerRadiusTopEnd="28dp"
+                app:boxCornerRadiusTopStart="28dp"
+                app:startIconDrawable="@drawable/ic_search">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionSearch"
+                    android:inputType="text"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/mbAdd"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:insetTop="@dimen/xxl"
-                android:insetBottom="@dimen/xxl"
-                android:paddingHorizontal="@dimen/xxxxxl"
-                android:clickable="true"
-                android:text="@string/add"
-                app:backgroundTint="@color/green"
-                app:cornerRadius="@dimen/xs" />
-        </LinearLayout>
-
-    </LinearLayout>
-
-
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingHorizontal="@dimen/xxl">
-
-
-
-        <!-- TOTAL + CATEGORY SUMMARY SECTION -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center_horizontal"
-            android:paddingHorizontal="@dimen/xxl"
-            android:paddingVertical="@dimen/xs">
-
-            <com.github.mikephil.charting.charts.PieChart
-                android:id="@+id/pieChart"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/pi_chart_size"
-                android:layout_marginTop="@dimen/xs"
-                android:layout_marginBottom="@dimen/xs" />
-
-            <!-- First row: Total centered -->
-            <TextView
-                android:id="@+id/tvTotal"
+                android:id="@+id/ivSort"
+                style="@style/Widget.Material3.Button.TonalButton.Icon"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/total"
-                android:textStyle="bold"
-                android:textSize="@dimen/tx_xl"
-                android:layout_marginBottom="@dimen/xs" />
-
-            <!-- Second row: Entertainment & Shops -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center"
-                android:layout_marginBottom="@dimen/xxxs">
-
-                <TextView
-                    android:id="@+id/tvEntertainmentTotal"
-                    android:layout_width="@dimen/none"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/entertainment_total" />
-
-                <TextView
-                    android:id="@+id/tvShopsTotal"
-                    android:layout_width="@dimen/none"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/shops_total" />
-            </LinearLayout>
-
-            <!-- Third row: Food and Drink & Others -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center">
-
-                <TextView
-                    android:id="@+id/tvFoodTotal"
-                    android:layout_width="@dimen/none"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/fnd_total" />
-
-                <TextView
-                    android:id="@+id/tvOthersTotal"
-                    android:layout_width="@dimen/none"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/other_total" />
-            </LinearLayout>
-
+                android:layout_height="56dp"
+                android:layout_marginStart="8dp"
+                android:contentDescription="@string/content_filter"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                app:icon="@drawable/ic_filter"
+                app:iconPadding="0dp"
+                app:iconGravity="textStart" />
         </LinearLayout>
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvExpenses"
+
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="@dimen/none"
+            android:layout_height="0dp"
             android:layout_weight="1"
             android:clipToPadding="false"
-            android:paddingTop="@dimen/xxxs"
-            android:paddingBottom="@dimen/recycler_bot_pad" />
+            android:paddingBottom="96dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- Summary card: chart + totals -->
+                <com.google.android.material.card.MaterialCardView
+                    style="@style/Widget.App.Card"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginBottom="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <com.github.mikephil.charting.charts.PieChart
+                            android:id="@+id/pieChart"
+                            android:layout_width="match_parent"
+                            android:layout_height="220dp"
+                            android:layout_marginBottom="8dp" />
+
+                        <TextView
+                            android:id="@+id/tvTotal"
+                            style="@style/TextAppearance.Material3.TitleLarge"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="12dp"
+                            android:textColor="?attr/colorPrimary"
+                            android:textStyle="bold"
+                            tools:text="Total: RM240.00" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tvEntertainmentTotal"
+                                style="@style/TextAppearance.Material3.BodyMedium"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:drawablePadding="8dp"
+                                android:gravity="center_vertical"
+                                app:drawableStartCompat="@drawable/bg_circle"
+                                app:drawableTint="@color/cat_entertainment"
+                                tools:text="Entertainment: RM0.00" />
+
+                            <TextView
+                                android:id="@+id/tvShopsTotal"
+                                style="@style/TextAppearance.Material3.BodyMedium"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:drawablePadding="8dp"
+                                android:gravity="center_vertical"
+                                app:drawableStartCompat="@drawable/bg_circle"
+                                app:drawableTint="@color/cat_shops"
+                                tools:text="Shops: RM0.00" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tvFoodTotal"
+                                style="@style/TextAppearance.Material3.BodyMedium"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:drawablePadding="8dp"
+                                android:gravity="center_vertical"
+                                app:drawableStartCompat="@drawable/bg_circle"
+                                app:drawableTint="@color/cat_food"
+                                tools:text="Food and Drink: RM0.00" />
+
+                            <TextView
+                                android:id="@+id/tvOthersTotal"
+                                style="@style/TextAppearance.Material3.BodyMedium"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:drawablePadding="8dp"
+                                android:gravity="center_vertical"
+                                app:drawableStartCompat="@drawable/bg_circle"
+                                app:drawableTint="@color/cat_others"
+                                tools:text="Others: RM0.00" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvExpenses"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
+                    tools:listitem="@layout/layout_expense" />
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
 
     </LinearLayout>
 
-    </ScrollView>
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/mbAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:text="@string/add"
+        app:icon="@drawable/ic_add" />
 
-
-</LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -30,7 +30,13 @@ class EditExpenseViewModel(
                 require(newExpense.quantity.toString().isNotBlank()) {"No Quantity"}
                 expense?.let {
                     repo.editExpense(
-                        it.copy(newExpense.itemName,newExpense.category,newExpense.quantity,newExpense.price)
+                        it.copy(
+                            itemName = newExpense.itemName,
+                            category = newExpense.category,
+                            quantity = newExpense.quantity,
+                            price = newExpense.price,
+                            date = newExpense.date
+                        )
                     )
                 }
                 _finish.emit(Unit)

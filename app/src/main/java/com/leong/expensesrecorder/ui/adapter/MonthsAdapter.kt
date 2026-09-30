@@ -3,14 +3,14 @@ package com.leong.expensesrecorder.ui.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.leong.expensesrecorder.data.enums.Months
+import com.leong.expensesrecorder.data.models.MonthYear
 import com.leong.expensesrecorder.databinding.LayoutMonthBinding
+import java.util.Locale
 
 class MonthsAdapter(
-    private var monthTotals: Map<Months, Double>,
-    private val onPress: (Months) -> Unit
+    private var items: List<Pair<MonthYear, Double>>,
+    private val onPress: (MonthYear) -> Unit
 ) : RecyclerView.Adapter<MonthsAdapter.MonthViewHolder>() {
-    private val months = Months.entries.toList()
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -25,21 +25,25 @@ class MonthsAdapter(
     }
 
     override fun onBindViewHolder(holder: MonthViewHolder, position: Int) {
-        val month = months[position]
-        val total = monthTotals[month] ?: 0.0
+        val (monthYear, total) = items[position]
+        val hasSpending = total > 0.0
         holder.binding.apply {
-            tvMonth.text = month.name
-            tvPrice.text = String.format("RM%.2f", total)
-            cvExpense.setOnClickListener { onPress(month) }
+            tvMonthBadge.text = monthYear.month.displayName.take(3)
+            tvMonth.text = monthYear.label
+            tvPrice.text = String.format(Locale.getDefault(), "RM%.2f", total)
+            // Dim months with no spending so the ones that matter stand out.
+            root.alpha = if (hasSpending) 1f else 0.55f
+            cvExpense.setOnClickListener { onPress(monthYear) }
         }
     }
 
-    override fun getItemCount():Int = months.size
+    override fun getItemCount(): Int = items.size
 
-    fun updateTotals(newTotals: Map<Months, Double>) {
-        monthTotals = newTotals
+    fun updateTotals(newTotals: List<Pair<MonthYear, Double>>) {
+        items = newTotals
         notifyDataSetChanged()
     }
+
     class MonthViewHolder(
         val binding: LayoutMonthBinding
     ): RecyclerView.ViewHolder(binding.root)

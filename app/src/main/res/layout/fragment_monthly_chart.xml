@@ -1,44 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:gravity="center_horizontal"
-    android:padding="@dimen/xl"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="?attr/colorSurface"
+    android:orientation="vertical"
+    android:padding="20dp">
 
     <TextView
         android:id="@+id/tvMonthTitle"
-        android:text="@string/month"
-        android:textSize="@dimen/xxxl"
-        android:textStyle="bold"
-        android:layout_marginBottom="@dimen/m"
+        style="@style/TextAppearance.Material3.HeadlineMedium"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-    <com.github.mikephil.charting.charts.PieChart
-        android:id="@+id/pieChart"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/month_pi_chart_size"
-        android:layout_marginBottom="@dimen/xxxl"/>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="4dp"
+        android:textColor="?attr/colorOnSurface"
+        android:textStyle="bold"
+        tools:text="October 2026" />
 
     <TextView
-        android:id="@+id/tvTotal"
-        android:text="@string/total"
-        android:textStyle="bold"
-        android:textSize="@dimen/tx_xl"
-        android:layout_marginBottom="@dimen/xxxl"
+        style="@style/TextAppearance.Material3.BodyMedium"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="@string/expenses"
+        android:textColor="?attr/colorOnSurfaceVariant" />
+
+    <com.google.android.material.card.MaterialCardView
+        style="@style/Widget.App.Card"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/pieChart"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:id="@+id/tvTotal"
+                style="@style/TextAppearance.Material3.TitleLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:textColor="?attr/colorPrimary"
+                android:textStyle="bold"
+                tools:text="Total: RM240.00" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/mbViewAll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/view_all"
-        app:cornerRadius="@dimen/m"
-        app:iconGravity="textEnd"
-        app:iconPadding="@dimen/xs"/>
+        android:layout_marginTop="16dp"
+        android:paddingVertical="12dp"
+        android:text="@string/view_all" />
 
 </LinearLayout>

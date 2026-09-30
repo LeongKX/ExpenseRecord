@@ -33,6 +33,8 @@ class EditExpenseFragment : BaseManageFragment() {
         val expenseId = args.expenseId
         lifecycleScope.launch {
             expense = viewModel.getExpense(expenseId)
+            selectedDate = expense.date
+            setupDatePicker()
             binding.run {
                 setExpense(expense)
                 mbSubmit.setOnClickListener {
@@ -43,7 +45,8 @@ class EditExpenseFragment : BaseManageFragment() {
                                 binding.cgCategory.checkedChipId
                             ).tag as Category,
                             quantity = etQuantity.text.toString().toInt(),
-                            price = etPrice.text.toString().toDouble()
+                            price = etPrice.text.toString().toDouble(),
+                            date = selectedDate
                         )
                     )
                 }

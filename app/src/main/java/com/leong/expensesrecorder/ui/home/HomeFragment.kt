@@ -5,7 +5,7 @@ import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
-import com.leong.expensesrecorder.data.enums.Months
+import com.leong.expensesrecorder.data.models.MonthYear
 
 class HomeFragment : BaseHomeManageFragment() {
     override val viewModel: HomeViewModel by viewModels{
@@ -20,8 +20,11 @@ class HomeFragment : BaseHomeManageFragment() {
         }
     }
 
-    override fun getExpenseDetailAction(months: Months): NavDirections {
-        return HomeFragmentDirections.actionHomeFragmentToExpenseDetailFragment(months)
+    override fun getExpenseDetailAction(monthYear: MonthYear): NavDirections {
+        return HomeFragmentDirections.actionHomeFragmentToExpenseDetailFragment(
+            monthYear.month,
+            monthYear.year
+        )
     }
 
 }

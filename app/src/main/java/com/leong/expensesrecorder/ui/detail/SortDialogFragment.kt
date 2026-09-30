@@ -1,8 +1,10 @@
 package com.leong.expensesrecorder.ui.detail
 
-import android.app.Dialog
 import android.os.Bundle
-import androidx.fragment.app.DialogFragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.leong.expensesrecorder.R
 import com.leong.expensesrecorder.data.enums.Category
 import com.leong.expensesrecorder.data.enums.SortBy
@@ -12,17 +14,32 @@ import com.leong.expensesrecorder.databinding.SortDialogBinding
 class SortDialogFragment(
     private val currentSort: SortBy,
     private val currentOrder: SortOrder,
+    private val currentCategory: Category?,
     private val onSortClick: (SortBy, SortOrder, Category?) -> Unit
-) : DialogFragment() {
+) : BottomSheetDialogFragment() {
 
-    private lateinit var binding: SortDialogBinding
+    private var _binding: SortDialogBinding? = null
+    private val binding get() = _binding!!
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = SortDialogBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        binding = SortDialogBinding.inflate(layoutInflater)
-        setRadio(currentSort,currentOrder)
-        val dialog = Dialog(requireContext())
-        dialog.setContentView(binding.root)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        restoreSelection()
+
+        binding.mbReset.setOnClickListener {
+            binding.rbDate.isChecked = true
+            binding.rbAscending.isChecked = true
+            binding.rbAll.isChecked = true
+        }
+
         binding.mbDone.setOnClickListener {
             val sortBy = when (binding.rgSort.checkedRadioButtonId) {
                 R.id.rbAmount -> SortBy.AMOUNT
@@ -39,14 +56,12 @@ class SortDialogFragment(
                 R.id.rbOthers -> Category.OTHERS
                 else -> null
             }
-            //Sends the information back to lambda
             onSortClick(sortBy, sortOrder, selectedCategory)
             dismiss()
         }
-        return dialog
     }
 
-    fun setRadio(currentSort: SortBy, currentOrder: SortOrder) {
+    private fun restoreSelection() {
         when (currentSort) {
             SortBy.DATE -> binding.rbDate.isChecked = true
             SortBy.AMOUNT -> binding.rbAmount.isChecked = true
@@ -55,6 +70,17 @@ class SortDialogFragment(
             SortOrder.ASCENDING -> binding.rbAscending.isChecked = true
             SortOrder.DESCENDING -> binding.rbDescending.isChecked = true
         }
+        when (currentCategory) {
+            Category.ENTERTAINMENT -> binding.rbEntertainment.isChecked = true
+            Category.SHOPS -> binding.rbShops.isChecked = true
+            Category.FOOD_AND_DRINK -> binding.rbFnD.isChecked = true
+            Category.OTHERS -> binding.rbOthers.isChecked = true
+            null -> binding.rbAll.isChecked = true
+        }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

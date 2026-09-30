@@ -7,10 +7,10 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.leong.expensesrecorder.MyApp
 import com.leong.expensesrecorder.data.enums.Category
-import com.leong.expensesrecorder.data.enums.Months
 import com.leong.expensesrecorder.data.enums.SortBy
 import com.leong.expensesrecorder.data.enums.SortOrder
 import com.leong.expensesrecorder.data.models.Expense
+import com.leong.expensesrecorder.data.models.MonthYear
 import com.leong.expensesrecorder.data.repo.ExpensesRepo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -27,8 +27,8 @@ class ExpenseDetailViewModel(
     private var currentSearch = ""
     private var currentCategoryFilter: Category? = null
 
-    suspend fun getExpensesByMonth(month: Months): List<Expense> {
-        val allExpenses = repo.getExpensesByMonth(month)
+    suspend fun getExpensesByMonth(monthYear: MonthYear): List<Expense> {
+        val allExpenses = repo.getExpensesByMonthYear(monthYear)
         return allExpenses
             .filterCategory()
             .filterSearch()
@@ -45,19 +45,19 @@ class ExpenseDetailViewModel(
 
     fun setSearch(str: String) {
         currentSearch = str
-        viewModelScope.launch { _finish.emit(Unit) }
     }
 
     fun setSorting(sortBy: SortBy, sortOrder: SortOrder) {
         currentSort = sortBy
         currentOrder = sortOrder
-        viewModelScope.launch { _finish.emit(Unit) }
     }
 
     fun setCategoryFilter(category: Category?) {
         currentCategoryFilter = category
-        viewModelScope.launch { _finish.emit(Unit) }
     }
+
+    /** The currently applied category filter, so the dialog can pre-select it. */
+    fun currentCategory(): Category? = currentCategoryFilter
 
 
     private fun List<Expense>.applySort(sortBy: SortBy, sortOrder: SortOrder): List<Expense> {

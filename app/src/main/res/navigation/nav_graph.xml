@@ -45,6 +45,9 @@
         <argument
             android:name="month"
             app:argType="com.leong.expensesrecorder.data.enums.Months" />
+        <argument
+            android:name="year"
+            app:argType="integer" />
 
     </fragment>
     <fragment

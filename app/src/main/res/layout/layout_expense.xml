@@ -1,124 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cvWord"
+    style="@style/Widget.App.Card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/xl"
-    android:clickable="true"
-    android:elevation="@dimen/xs"
-    app:cardCornerRadius="@dimen/xs">
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginVertical="5dp"
+    app:cardCornerRadius="18dp">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="@dimen/xs">
+        android:padding="16dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <View
+                android:id="@+id/vCategoryDot"
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/bg_circle"
+                android:backgroundTint="@color/cat_others" />
 
             <TextView
                 android:id="@+id/tvItemName"
-                style="@style/TextAppearance.Material3.TitleLarge"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:hint="item name"
-                android:maxLines="1" />
-
-            <View
+                style="@style/TextAppearance.Material3.TitleMedium"
                 android:layout_width="0dp"
-                android:layout_height="@dimen/none"
-                android:layout_weight="1"/>
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="?attr/colorOnSurface"
+                tools:text="Lunch at cafe" />
 
             <TextView
                 android:id="@+id/tvPrice"
-                style="@style/TextAppearance.Material3.TitleLarge"
+                style="@style/TextAppearance.App.Money"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/xxs"
-                android:ellipsize="end"
-                android:hint="price"
-                android:maxLines="1"
-                android:minLines="1" />
-
+                android:layout_marginStart="8dp"
+                android:textColor="?attr/colorPrimary"
+                tools:text="RM24.50" />
         </LinearLayout>
-
-
-        <TextView
-            android:id="@+id/tvCategory"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="@dimen/xxs"
-            android:ellipsize="end"
-            android:hint="category"
-            android:maxLines="1"
-            android:minLines="1" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvCategory"
+                style="@style/TextAppearance.Material3.BodySmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="?attr/colorOnSurfaceVariant"
+                tools:text="Food and Drink" />
 
             <TextView
                 android:id="@+id/tvQuantity"
-                android:layout_width="wrap_content"
+                style="@style/TextAppearance.Material3.BodySmall"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/xxs"
-                android:ellipsize="end"
-                android:hint="quantity"
-                android:maxLines="1"
-                android:minLines="1" />
-
-            <View
-                android:layout_width="@dimen/none"
-                android:layout_height="@dimen/none"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:layout_marginStart="12dp"
+                android:textColor="?attr/colorOnSurfaceVariant"
+                tools:text="Qty: 1" />
 
             <TextView
                 android:id="@+id/tvDateTime"
+                style="@style/TextAppearance.Material3.BodySmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/xxs"
-                android:ellipsize="end"
-                android:hint="date time"
-                android:maxLines="1"
-                android:minLines="1" />
-
+                android:textColor="?attr/colorOnSurfaceVariant"
+                tools:text="6 Oct 2026" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="@dimen/xs">
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/mbUpdate"
-                android:layout_width="@dimen/none"
-                android:layout_height="@dimen/layout_expense_btn_height"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="6dp"
                 android:layout_weight="1"
-                android:layout_marginEnd="@dimen/xs"
-                android:text="@string/update"
-                app:backgroundTint="@color/teal"
-                app:cornerRadius="@dimen/xs" />
+                android:text="@string/update" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/mbDelete"
-                android:layout_width="@dimen/none"
-                android:layout_height="@dimen/layout_expense_btn_height"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
                 android:layout_weight="1"
-                android:layout_marginStart="@dimen/xs"
                 android:text="@string/delete"
-                app:backgroundTint="@color/red"
-                app:cornerRadius="@dimen/xs" />
-
+                android:textColor="?attr/colorError"
+                app:strokeColor="?attr/colorError" />
         </LinearLayout>
-
-
     </LinearLayout>
 
-
-
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>

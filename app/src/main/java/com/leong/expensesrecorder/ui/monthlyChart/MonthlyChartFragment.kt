@@ -13,8 +13,7 @@ import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
-import com.github.mikephil.charting.utils.ColorTemplate
-import com.leong.expensesrecorder.data.enums.Months
+import com.leong.expensesrecorder.data.models.MonthYear
 import com.leong.expensesrecorder.databinding.FragmentMonthlyChartBinding
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -26,9 +25,7 @@ class MonthlyChartFragment : Fragment() {
         MonthlyChartViewModel.Factory
     }
 
-    private val month: Months by lazy {
-        Months.entries[java.time.LocalDate.now().monthValue - 1]
-    }
+    private val monthYear: MonthYear by lazy { MonthYear.now() }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,8 +38,8 @@ class MonthlyChartFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.tvMonthTitle.text = month.name
-        viewModel.loadMonthData(month)
+        binding.tvMonthTitle.text = monthYear.label
+        viewModel.loadMonthData(monthYear)
 
         lifecycleScope.launch {
             viewModel.totals.collectLatest { totals ->
@@ -64,18 +61,27 @@ class MonthlyChartFragment : Fragment() {
         configurePieChart(data)
     }
 
+    private val sliceColors = mutableListOf<Int>()
+
     private fun createPieEntries(totals: CategoryTotals): List<PieEntry> {
         val entries = mutableListOf<PieEntry>()
-        if (totals.entertainment > 0) entries.add(PieEntry(totals.entertainment.toFloat(), "Entertainment"))
-        if (totals.shops > 0) entries.add(PieEntry(totals.shops.toFloat(), "Shops"))
-        if (totals.food > 0) entries.add(PieEntry(totals.food.toFloat(), "Food & Drink"))
-        if (totals.others > 0) entries.add(PieEntry(totals.others.toFloat(), "Others"))
+        sliceColors.clear()
+        fun addSlice(value: Double, label: String, colorRes: Int) {
+            if (value > 0) {
+                entries.add(PieEntry(value.toFloat(), label))
+                sliceColors.add(androidx.core.content.ContextCompat.getColor(requireContext(), colorRes))
+            }
+        }
+        addSlice(totals.entertainment, "Entertainment", com.leong.expensesrecorder.R.color.cat_entertainment)
+        addSlice(totals.shops, "Shops", com.leong.expensesrecorder.R.color.cat_shops)
+        addSlice(totals.food, "Food & Drink", com.leong.expensesrecorder.R.color.cat_food)
+        addSlice(totals.others, "Others", com.leong.expensesrecorder.R.color.cat_others)
         return entries
     }
 
     private fun createPieData(entries: List<PieEntry>): PieData {
         val dataSet = PieDataSet(entries, "")
-        dataSet.colors = ColorTemplate.MATERIAL_COLORS.toList()
+        dataSet.colors = sliceColors.toList()
         dataSet.sliceSpace = 3f
         dataSet.selectionShift = 5f
 
@@ -86,13 +92,18 @@ class MonthlyChartFragment : Fragment() {
     }
 
     private fun configurePieChart(data: PieData) = binding.pieChart.apply {
+        val onSurface = com.google.android.material.color.MaterialColors.getColor(
+            this, com.google.android.material.R.attr.colorOnSurface
+        )
         this.data = data
         description.isEnabled = false
         setUsePercentValues(true)
         isDrawHoleEnabled = true
         setHoleColor(Color.TRANSPARENT)
-        setEntryLabelColor(Color.BLACK)
-        centerText = month.name
+        setEntryLabelColor(onSurface)
+        legend.textColor = onSurface
+        centerText = monthYear.month.displayName
+        setCenterTextColor(onSurface)
         setCenterTextSize(14f)
 
         legend.orientation = Legend.LegendOrientation.HORIZONTAL

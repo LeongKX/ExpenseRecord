@@ -18,6 +18,7 @@ class AddExpenseFragment : BaseManageFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupExpenseTypes()
+        setupDatePicker()
 
         binding.run {
             mbSubmit.text = getString(R.string.add)
@@ -37,7 +38,8 @@ class AddExpenseFragment : BaseManageFragment() {
                         itemName = itemName,
                         category = selectedCategory ?: Category.OTHERS,
                         quantity = quantity,
-                        price = price
+                        price = price,
+                        date = selectedDate
                     )
                 )
             }

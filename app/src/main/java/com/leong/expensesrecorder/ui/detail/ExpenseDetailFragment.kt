@@ -21,18 +21,17 @@ import com.leong.expensesrecorder.data.enums.Category
 import com.leong.expensesrecorder.data.enums.SortBy
 import com.leong.expensesrecorder.data.enums.SortOrder
 import com.leong.expensesrecorder.data.models.Expense
+import com.leong.expensesrecorder.data.models.MonthYear
 import com.leong.expensesrecorder.data.util.Constant
 import com.leong.expensesrecorder.databinding.FragmentExpenseDetailBinding
 import com.leong.expensesrecorder.ui.adapter.ExpensesAdapter
 import kotlinx.coroutines.launch
-import com.leong.expensesrecorder.data.enums.Months
 
 
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
-import com.github.mikephil.charting.utils.ColorTemplate
 
 
 class ExpenseDetailFragment : Fragment() {
@@ -44,6 +43,8 @@ class ExpenseDetailFragment : Fragment() {
     private lateinit var binding: FragmentExpenseDetailBinding
 
     private val args: ExpenseDetailFragmentArgs by navArgs()
+
+    private val monthYear: MonthYear by lazy { MonthYear(args.year, args.month) }
 
     private var expense: Expense? = null
 
@@ -73,14 +74,14 @@ class ExpenseDetailFragment : Fragment() {
     }
 
     private fun setupToolbar() {
+        binding.mtDetails.title = monthYear.label
         binding.mtDetails.setNavigationOnClickListener {
             findNavController().popBackStack()
         }
     }
 
     private fun setupAddButton() {
-        val currentMonth = Months.entries[java.time.LocalDate.now().monthValue - 1]
-        if (args.month == currentMonth) {
+        if (monthYear == MonthYear.now()) {
             binding.mbAdd.apply {
                 visibility = View.VISIBLE
                 setOnClickListener {
@@ -111,7 +112,7 @@ class ExpenseDetailFragment : Fragment() {
 
     private fun observeExpenses() {
         lifecycleScope.launch {
-            val expenses = viewModel.getExpensesByMonth(args.month)
+            val expenses = viewModel.getExpensesByMonth(monthYear)
             if (expenses.isNotEmpty()) {
                 adapter.setExpenses(expenses)
                 setupRecyclerView()
@@ -133,8 +134,7 @@ class ExpenseDetailFragment : Fragment() {
             mtDetails.setNavigationOnClickListener { findNavController().popBackStack() }
             setupRecyclerView()
 
-            val currentMonth = Months.entries[java.time.LocalDate.now().monthValue - 1]
-            if (args.month == currentMonth) {
+            if (monthYear == MonthYear.now()) {
                 mbAdd.visibility = View.VISIBLE
                 mbAdd.setOnClickListener {
                     val action = ExpenseDetailFragmentDirections
@@ -154,7 +154,7 @@ class ExpenseDetailFragment : Fragment() {
 
 
     suspend fun getExpense() {
-        val expenses = viewModel.getExpensesByMonth(args.month)
+        val expenses = viewModel.getExpensesByMonth(monthYear)
 
         if (expenses.isNotEmpty()) {
             expense = expenses.first()
@@ -199,20 +199,33 @@ class ExpenseDetailFragment : Fragment() {
         }
         val grandTotal = entertainmentTotal + shopsTotal + foodTotal + othersTotal
         // Update UI
-        binding.tvTotal.text = String.format("Total: RM%.2f", grandTotal)
-        binding.tvEntertainmentTotal.text = String.format("Entertainment: RM%.2f", entertainmentTotal)
-        binding.tvShopsTotal.text = String.format("Shops: RM%.2f", shopsTotal)
-        binding.tvFoodTotal.text = String.format("Food and Drink: RM%.2f", foodTotal)
-        binding.tvOthersTotal.text = String.format("Others: RM%.2f", othersTotal)
+        val locale = java.util.Locale.getDefault()
+        binding.tvTotal.text = String.format(locale, "Total: RM%,.2f", grandTotal)
+        binding.tvEntertainmentTotal.text = String.format(locale, "Entertainment: RM%,.2f", entertainmentTotal)
+        binding.tvShopsTotal.text = String.format(locale, "Shops: RM%,.2f", shopsTotal)
+        binding.tvFoodTotal.text = String.format(locale, "Food and Drink: RM%,.2f", foodTotal)
+        binding.tvOthersTotal.text = String.format(locale, "Others: RM%,.2f", othersTotal)
 
         // After updating text totals
         setupPieChart(entertainmentTotal, shopsTotal, foodTotal, othersTotal)
     }
 
     private fun setupPieChart(entertainment: Double, shops: Double, food: Double, others: Double) {
-        val entries = createPieEntries(entertainment, shops, food, others)
+        val entries = ArrayList<PieEntry>()
+        val colors = ArrayList<Int>()
+        fun addSlice(value: Double, label: String, colorRes: Int) {
+            if (value > 0) {
+                entries.add(PieEntry(value.toFloat(), label))
+                colors.add(androidx.core.content.ContextCompat.getColor(requireContext(), colorRes))
+            }
+        }
+        addSlice(entertainment, "Entertainment", R.color.cat_entertainment)
+        addSlice(shops, "Shops", R.color.cat_shops)
+        addSlice(food, "Food & Drink", R.color.cat_food)
+        addSlice(others, "Others", R.color.cat_others)
+
         val dataSet = PieDataSet(entries, "").apply {
-            colors = ColorTemplate.MATERIAL_COLORS.toList()
+            this.colors = colors
             sliceSpace = 3f
             selectionShift = 5f
         }
@@ -225,24 +238,20 @@ class ExpenseDetailFragment : Fragment() {
         configurePieChart(data)
     }
 
-    private fun createPieEntries(entertainment: Double, shops: Double, food: Double, others: Double): ArrayList<PieEntry> {
-        val entries = ArrayList<PieEntry>()
-        if (entertainment > 0) entries.add(PieEntry(entertainment.toFloat(), "Entertainment"))
-        if (shops > 0) entries.add(PieEntry(shops.toFloat(), "Shops"))
-        if (food > 0) entries.add(PieEntry(food.toFloat(), "Food & Drink"))
-        if (others > 0) entries.add(PieEntry(others.toFloat(), "Others"))
-        return entries
-    }
-
     private fun configurePieChart(data: PieData) {
+        val onSurface = com.google.android.material.color.MaterialColors.getColor(
+            binding.pieChart, com.google.android.material.R.attr.colorOnSurface
+        )
         binding.pieChart.apply {
             this.data = data
             description.isEnabled = false
             setUsePercentValues(true)
             isDrawHoleEnabled = true
             setHoleColor(Color.TRANSPARENT)
-            setEntryLabelColor(Color.BLACK)
+            setEntryLabelColor(onSurface)
+            legend.textColor = onSurface
             centerText = "Expenses"
+            setCenterTextColor(onSurface)
             setCenterTextSize(14f)
 
             legend.orientation = Legend.LegendOrientation.HORIZONTAL
@@ -274,7 +283,11 @@ class ExpenseDetailFragment : Fragment() {
 
     fun setNavigation() {
         binding.ivSort.setOnClickListener {
-            val dialog = SortDialogFragment(currentSort, currentOrder) { sortBy, orderBy, category ->
+            val dialog = SortDialogFragment(
+                currentSort,
+                currentOrder,
+                viewModel.currentCategory()
+            ) { sortBy, orderBy, category ->
                 setSort(sortBy, orderBy)
                 viewModel.setCategoryFilter(category)
                 lifecycleScope.launch { getExpense() } // refresh list
